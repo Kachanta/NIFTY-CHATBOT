@@ -1,0 +1,8 @@
+python-dotenv
+langchain-core
+langchain
+langchain-cohere
+langchain-pinecone
+langchain-nvidia-ai-endpoints
+cohere
+pinecone-client

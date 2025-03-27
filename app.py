@@ -16,9 +16,9 @@ from langchain_pinecone import PineconeVectorStore
 import os
 from pinecone import Pinecone
 from langchain_nvidia_ai_endpoints import NVIDIAEmbeddings
-
+pinecone_key=st.secrets["PINECONE_API_KEY"]
 # Initialize Pinecone
-if not os.getenv("PINECONE_API_KEY"):
+if not pinecone_key:
     st.error("Pinecone API key is missing. Set it as an environment variable.")
     st.stop()
 
@@ -33,12 +33,13 @@ embeddings = NVIDIAEmbeddings(model="NV-Embed-QA")
 vector_store = PineconeVectorStore(index=index, embedding=embeddings)
 retriever = vector_store.as_retriever(k=1)
 
+cohere_api=st.secrets["COHERE_API_KEY"]
 # Initialize LLM
-if not os.getenv("COHERE_API_KEY"):
+if not cohere_api:
     st.error("Cohere API key is missing. Set it as an environment variable.")
     st.stop()
 
-cohere_llm = ChatCohere(cohere_api_key=os.environ.get('COHERE_API_KEY'))
+cohere_llm = ChatCohere(cohere_api_key=cohere_api)
 
 # Define Prompt Template
 prompt = ChatPromptTemplate.from_template(
